@@ -1,0 +1,85 @@
+﻿using FilmRentalAPI.Models;
+using FilmRentalAPI.Requests;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace FilmRentalAPI.Controllers
+{
+	[ApiController]
+	[Route("rents")]
+	public class RentsController : ControllerBase
+	{
+
+		private FilmRentalAPIDbContext _filmRentalAPIDbContext;
+
+		public RentsController(FilmRentalAPIDbContext filmRentalAPIDbContext)
+		{
+			_filmRentalAPIDbContext = filmRentalAPIDbContext;
+		}
+
+		[HttpGet]
+		//Hämta en lista på alla uthyrningsinfo
+		public ActionResult<List<Rent>> GetRent()
+		{
+			try
+			{
+				var rents = _filmRentalAPIDbContext.Rents.ToList();
+				return Ok(rents);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		//Hämtar infon för utvalt ID
+		[HttpGet("{rentalID:int}")]
+		public ActionResult<Rent> GetRent(int rentalID)
+		{
+			var rent = _filmRentalAPIDbContext
+				.Rents
+				.FirstOrDefault(x => x.RentalID == rentalID);
+
+			if (rent == null)
+			{
+				return NotFound($"Could not find info on ID {rentalID}");
+			}
+			return Ok(rent);
+		}
+
+		[HttpPost]
+		public ActionResult<int> AddRent([FromBody] AddRentRequest request)
+		{
+			var rent = new Rent
+			{
+				RentalDate = request.RentalDate,
+				ReturnDate = request.ReturnDate
+			};
+
+			_filmRentalAPIDbContext.Rents.Add(rent);
+			_filmRentalAPIDbContext.SaveChanges();
+
+			return Ok(rent);
+		}
+
+		[HttpDelete("{rentalID:int}")]
+
+		public ActionResult DeleteRent(int rentalID)
+		{
+			var rentToBeDeleted = _filmRentalAPIDbContext.Rents.Find(rentalID);
+			if (rentToBeDeleted == null)
+			{
+				return BadRequest($"Could not get info on rentalID {rentalID}");
+			}
+			_filmRentalAPIDbContext.Rents.Remove(rentToBeDeleted);
+			_filmRentalAPIDbContext.SaveChanges();
+
+			return Ok(rentalID);
+
+
+		}
+	}
+}
