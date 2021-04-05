@@ -1,5 +1,8 @@
-﻿using FilmRentalAPI.Models;
+﻿using FilmRentalAPI.Requests.EditRequests;
+using FilmRentalAPI.Models;
 using FilmRentalAPI.Requests;
+using FilmRentalAPI.Requests.AddRequests;
+using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +12,7 @@ using System.Threading.Tasks;
 namespace FilmRentalAPI.Controllers
 {
 	[ApiController]
-	[Route("customers")]
+	[Route("")]
 	public class CustomersController : ControllerBase
 	{
 
@@ -22,10 +25,33 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalAPIDbContext = filmRentalAPIDbContext;
 		}
 
-		[HttpGet]
-		//Hämta en lista men alla customers från databasen 
-		public ActionResult<List<Customer>> GetCustomer()
+		[HttpGet("Get a List of All Customers")]
+		//Hämta en lista med alla customers från databasen 
+		public ActionResult<List<Customer>> GetCustomers()
 		{
+			var customersFromDb = _filmRentalAPIDbContext.Customers.ToList();
+			var customerResponses = new List<CustomerResponse>();
+
+			foreach (var customer in customersFromDb)
+			{
+				var customerResponse = new CustomerResponse
+				{
+					CustomerID = customer.CustomerID,
+					FirstName = customer.FirstName,
+					LastName = customer.LastName,
+					PhoneNumber = customer.PhoneNumber,
+					Email = customer.Email,
+					Adress = customer.Adress
+				};
+				customerResponses.Add(customerResponse);
+			}
+
+			return Ok (customerResponses);
+
+
+			//ANVÄNDER JAG DENNA KODEN FÅR JAG UPP RIKTIGA KODEN, MEN ANVÄNDER JAG DEN OVAN FÅR JAG ENDAST UPP 0
+			/*var customersFromDb = _filmRentalAPIDbContext.Customers.ToList();
+
 			try
 			{
 				var customers = _filmRentalAPIDbContext.Customers.ToList();
@@ -38,9 +64,11 @@ namespace FilmRentalAPI.Controllers
 				throw;
 			}
 
+			return Ok(customersFromDb); */
+
 		}
 
-		[HttpGet("{customerID:int}")]
+		[HttpGet("Retrieve Customer with Specific ID")]
 
 		//Hämtar all information som customerID är kopplad till
 		public ActionResult<Customer> GetCustomer(int customerID)
@@ -57,7 +85,7 @@ namespace FilmRentalAPI.Controllers
 			return Ok(customer);
 		}
 
-		[HttpPost]
+		[HttpPost("Add Customer")]
 		public ActionResult<int> AddCustomer([FromBody] AddCustomerRequest request)
 		{
 			var customer = new Customer
@@ -74,7 +102,39 @@ namespace FilmRentalAPI.Controllers
 			return Ok(customer);
 		}
 
-		[HttpDelete("{customerID:int}")]
+		[HttpPatch("Edit Customer Details")]
+		public ActionResult<Customer> EditCustomer(int customerID, [FromBody] EditCustomerRequest request)
+		{
+			var customerToEdit = _filmRentalAPIDbContext.Customers.Find(customerID);
+			
+			if (request.FirstName != null && request.FirstName != "string")
+			{
+				customerToEdit.FirstName = request.FirstName;
+			}
+			if (request.LastName != null && request.LastName != "string")
+			{
+				customerToEdit.LastName = request.LastName;
+			}
+			if (request.PhoneNumber != null && request.PhoneNumber != "string")
+			{
+				customerToEdit.PhoneNumber = request.PhoneNumber;
+			}
+			if (request.Email != null && request.Email != "string")
+			{
+				customerToEdit.Email = request.Email;
+			}
+			if (request.Adress != null && request.Adress != "string")
+			{
+				customerToEdit.Adress = request.Adress;
+			}
+
+			_filmRentalAPIDbContext.Customers.Update(customerToEdit);
+			_filmRentalAPIDbContext.SaveChanges();
+
+			return customerToEdit;
+		}
+
+		[HttpDelete("Delete Customer with Specific ID")]
 		public ActionResult DeleteCustomer(int customerID)
 		{
 			var customerToBeDeleted = _filmRentalAPIDbContext.Customers.Find(customerID);
@@ -84,7 +144,7 @@ namespace FilmRentalAPI.Controllers
 			}
 			_filmRentalAPIDbContext.Customers.Remove(customerToBeDeleted);
 			_filmRentalAPIDbContext.SaveChanges();
-			return NoContent();
+			return Ok($"You have now deleted customer with ID: {customerID}");
 
 		}
 

@@ -1,15 +1,18 @@
-﻿using FilmRentalAPI.Models;
+﻿using FilmRentalAPI.Requests.EditRequests;
+using FilmRentalAPI.Models;
 using FilmRentalAPI.Requests;
+using FilmRentalAPI.Requests.AddRequests;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FilmRentalAPI.Responses;
 
 namespace FilmRentalAPI.Controllers
 {
 	[ApiController]
-	[Route("rents")]
+	[Route("")]
 	public class RentsController : ControllerBase
 	{
 
@@ -20,11 +23,27 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalAPIDbContext = filmRentalAPIDbContext;
 		}
 
-		[HttpGet]
+		[HttpGet("A List with all Rental Details")]
 		//Hämta en lista på alla uthyrningsinfo
 		public ActionResult<List<Rent>> GetRent()
 		{
-			try
+			var rentsFromDb = _filmRentalAPIDbContext.Rents.ToList();
+			var rentResponses = new List<RentResponse>();
+
+			foreach (var rent in rentsFromDb)
+			{
+				var rentResponse = new RentResponse
+				{
+					RentalID = rent.RentalID,
+					RentalDate = rent.RentalDate,
+					ReturnDate = rent.ReturnDate
+				};
+				rentResponses.Add(rentResponse);
+			}
+
+			return Ok(rentResponses);
+			
+			/*try
 			{
 				var rents = _filmRentalAPIDbContext.Rents.ToList();
 				return Ok(rents);
@@ -32,11 +51,11 @@ namespace FilmRentalAPI.Controllers
 			catch (Exception ex)
 			{
 				throw;
-			}
+			}*/
 		}
 
 		//Hämtar infon för utvalt ID
-		[HttpGet("{rentalID:int}")]
+		[HttpGet("Retrieve Rental Details from Specific ID")]
 		public ActionResult<Rent> GetRent(int rentalID)
 		{
 			var rent = _filmRentalAPIDbContext
@@ -50,7 +69,7 @@ namespace FilmRentalAPI.Controllers
 			return Ok(rent);
 		}
 
-		[HttpPost]
+		[HttpPost("Add Rental Details")]
 		public ActionResult<int> AddRent([FromBody] AddRentRequest request)
 		{
 			var rent = new Rent
@@ -65,7 +84,25 @@ namespace FilmRentalAPI.Controllers
 			return Ok(rent);
 		}
 
-		[HttpDelete("{rentalID:int}")]
+		[HttpPatch("Edit Rental Details")]
+		public ActionResult<Rent> EditRent(int rentalID, [FromBody] EditRentRequest request)
+		{
+			var rentToEdit = _filmRentalAPIDbContext.Rents.Find(rentalID);
+			if (request.RentalDate < request.ReturnDate)
+			{
+				rentToEdit.RentalDate = request.RentalDate;
+				rentToEdit.ReturnDate = request.ReturnDate;
+
+				_filmRentalAPIDbContext.Rents.Update(rentToEdit);
+				_filmRentalAPIDbContext.SaveChanges();
+
+			}
+
+			return rentToEdit;
+		
+		}
+
+		[HttpDelete("Delete Rental Details")]
 
 		public ActionResult DeleteRent(int rentalID)
 		{
@@ -77,7 +114,7 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalAPIDbContext.Rents.Remove(rentToBeDeleted);
 			_filmRentalAPIDbContext.SaveChanges();
 
-			return Ok(rentalID);
+			return Ok($"You have now deleted ID:{rentalID}");
 
 
 		}

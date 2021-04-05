@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmRentalAPI.Migrations
 {
     [DbContext(typeof(FilmRentalAPIDbContext))]
-    [Migration("20210329144231_InitialCreate")]
+    [Migration("20210405101524_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,47 @@ namespace FilmRentalAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ActorFilm", b =>
+                {
+                    b.Property<int>("ActorsActorID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FilmsFilmID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ActorsActorID", "FilmsFilmID");
+
+                    b.HasIndex("FilmsFilmID");
+
+                    b.ToTable("ActorFilm");
+                });
+
+            modelBuilder.Entity("FilmRentalAPI.Models.Actor", b =>
+                {
+                    b.Property<int>("ActorID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DateOfBirth")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MostPopularFilm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ActorID");
+
+                    b.ToTable("Actors");
+                });
 
             modelBuilder.Entity("FilmRentalAPI.Models.Customer", b =>
                 {
@@ -68,6 +109,9 @@ namespace FilmRentalAPI.Migrations
                     b.Property<string>("FilmRating")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FilmTitle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ReleaseYear")
                         .HasColumnType("int");
 
@@ -104,6 +148,21 @@ namespace FilmRentalAPI.Migrations
                     b.HasIndex("FilmID");
 
                     b.ToTable("Rents");
+                });
+
+            modelBuilder.Entity("ActorFilm", b =>
+                {
+                    b.HasOne("FilmRentalAPI.Models.Actor", null)
+                        .WithMany()
+                        .HasForeignKey("ActorsActorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FilmRentalAPI.Models.Film", null)
+                        .WithMany()
+                        .HasForeignKey("FilmsFilmID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FilmRentalAPI.Models.Rent", b =>

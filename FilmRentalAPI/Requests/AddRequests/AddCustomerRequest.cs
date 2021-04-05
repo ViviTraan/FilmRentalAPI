@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FilmRentalAPI.Requests
+namespace FilmRentalAPI.Requests.AddRequests
 {
 	public class AddCustomerRequest
 	{
