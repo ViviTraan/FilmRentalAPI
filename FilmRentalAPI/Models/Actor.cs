@@ -13,6 +13,7 @@ namespace FilmRentalAPI.Models
 		public string DateOfBirth { get; set; }
 		public string MostPopularFilm { get; set; }
 
+		
 		public ICollection <Film> Films { get; set; }
 	}
 }

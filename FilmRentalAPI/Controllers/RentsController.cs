@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FilmRentalAPI.Responses;
+using Microsoft.EntityFrameworkCore;
+using FilmRentalAPI.Requests.JoinRequests;
 
 namespace FilmRentalAPI.Controllers
 {
@@ -23,7 +25,7 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalAPIDbContext = filmRentalAPIDbContext;
 		}
 
-		[HttpGet("A List with all Rental Details")]
+		[HttpGet("List_Of_Rentals")]
 		//Hämta en lista på alla uthyrningsinfo
 		public ActionResult<List<Rent>> GetRent()
 		{
@@ -35,6 +37,8 @@ namespace FilmRentalAPI.Controllers
 				var rentResponse = new RentResponse
 				{
 					RentalID = rent.RentalID,
+					CustomerID = rent.CustomerID,
+					FilmID = rent.FilmID,
 					RentalDate = rent.RentalDate,
 					ReturnDate = rent.ReturnDate
 				};
@@ -55,7 +59,7 @@ namespace FilmRentalAPI.Controllers
 		}
 
 		//Hämtar infon för utvalt ID
-		[HttpGet("Retrieve Rental Details from Specific ID")]
+		[HttpGet("Retrieve_Rental_By_ID")]
 		public ActionResult<Rent> GetRent(int rentalID)
 		{
 			var rent = _filmRentalAPIDbContext
@@ -69,11 +73,29 @@ namespace FilmRentalAPI.Controllers
 			return Ok(rent);
 		}
 
-		[HttpPost("Add Rental Details")]
+		[HttpGet("Get_Rental_Details_By_ID")]
+		public ActionResult<Rent> GetRentalInformation(int rentalID)
+		{
+			var rent = _filmRentalAPIDbContext
+				.Rents
+				.Include(x => x.Film)
+				.Include(y => y.Customer)
+				.FirstOrDefault(x => x.RentalID == rentalID);
+
+			return Ok(rent);
+		}
+
+
+		[HttpPost("Add_Rental")]
 		public ActionResult<int> AddRent([FromBody] AddRentRequest request)
 		{
+			var customer = _filmRentalAPIDbContext.Customers.Find(request.CustomerID);
+			var film = _filmRentalAPIDbContext.Films.Find(request.FilmID);
 			var rent = new Rent
+
 			{
+				Customer = customer,
+				Film = film,
 				RentalDate = request.RentalDate,
 				ReturnDate = request.ReturnDate
 			};
@@ -84,7 +106,7 @@ namespace FilmRentalAPI.Controllers
 			return Ok(rent);
 		}
 
-		[HttpPatch("Edit Rental Details")]
+		[HttpPatch("Edit_Rental")]
 		public ActionResult<Rent> EditRent(int rentalID, [FromBody] EditRentRequest request)
 		{
 			var rentToEdit = _filmRentalAPIDbContext.Rents.Find(rentalID);
@@ -102,7 +124,7 @@ namespace FilmRentalAPI.Controllers
 		
 		}
 
-		[HttpDelete("Delete Rental Details")]
+		[HttpDelete("Delete_Rental")]
 
 		public ActionResult DeleteRent(int rentalID)
 		{

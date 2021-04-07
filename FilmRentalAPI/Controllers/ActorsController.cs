@@ -21,7 +21,7 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalDbContext = filmRentalAPIDbContext;
 		}
 
-		[HttpGet("Get a List of All Actors")]
+		[HttpGet("List_Of_Actors")]
 		public ActionResult<List<Actor>> GetActors()
 		{
 			var actorsFromDb = _filmRentalDbContext.Actors.ToList();
@@ -43,7 +43,7 @@ namespace FilmRentalAPI.Controllers
 			return Ok(actorResponses);
 		}
 
-		[HttpGet("Retrieve Actor with Specific ID")]
+		[HttpGet("Retrieve_Actor_By_ID")]
 		public ActionResult<Actor> GetActor(int actorID)
 		{
 			var actor = _filmRentalDbContext
@@ -57,7 +57,7 @@ namespace FilmRentalAPI.Controllers
 			return Ok(actor);
 		}
 
-		[HttpPost("Add Actor")]
+		[HttpPost("Add_Actor")]
 		public ActionResult<int> AddActor([FromBody] AddActorRequest request)
 		{
 			var actor = new Actor
@@ -73,7 +73,7 @@ namespace FilmRentalAPI.Controllers
 			return Ok(actor);
 		}
 
-		[HttpPatch("Edit Actor Details")]
+		[HttpPatch("Edit_Actor")]
 		public ActionResult<Actor> EditActor(int actorID, [FromBody] EditActorRequest request)
 		{
 			var actorToEdit = _filmRentalDbContext.Actors.Find(actorID);
@@ -100,7 +100,7 @@ namespace FilmRentalAPI.Controllers
 
 			return actorToEdit;
 		}
-		[HttpDelete("Delete Actor with Specific ID")]
+		[HttpDelete("Delete_Actor_By_ID")]
 		public ActionResult DeleteActor(int actorID)
 		{
 			var actorToBeDeleted = _filmRentalDbContext.Actors.Find(actorID);

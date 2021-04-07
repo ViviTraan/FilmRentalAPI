@@ -2,7 +2,6 @@
 using FilmRentalAPI.Requests;
 using FilmRentalAPI.Requests.AddRequests;
 using FilmRentalAPI.Requests.EditRequests;
-using FilmRentalAPI.Requests.ViewAllRequests;
 using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +22,7 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalAPIDbContext = filmRentalAPIDbContext;
 		}
 
-		[HttpGet("Get a List with all Films")]
+		[HttpGet("List_Of_Films")]
 		public ActionResult<List<Film>> GetFilm()
 		{
 			var filmsFromDb = _filmRentalAPIDbContext.Films.ToList();
@@ -56,7 +55,7 @@ namespace FilmRentalAPI.Controllers
 			}*/
 
 		}
-		[HttpGet("Retrieve Film with Specific ID")]
+		[HttpGet("Retrieve_Film_By_ID")]
 		public ActionResult<Film> GetFilm(int filmID)
 		{
 			var film = _filmRentalAPIDbContext
@@ -71,47 +70,56 @@ namespace FilmRentalAPI.Controllers
 			return Ok(film);
 		}
 
-		//[HttpGet("View actors in Film by ID")]
-		//public ActionResult<FilmWithActors> GetFilmWithActorsByID()
-		//{
-		//	var films = _filmRentalAPIDbContext.Films
-		//		.Include(b => b.FilmsActors)
-		//		.Where(b => b.FilmsActors.Any(fa => fa.ActorID == ))
+		//Namn får inte ha några mellanslag
+		[HttpGet("View_Actors_in_Film_by_ID")]
+		public ActionResult<FilmWithActorsResponse> GetFilmWithActorsByID(int ID)
+		{
+			var film = _filmRentalAPIDbContext.Films.Include(x => x.Actors).FirstOrDefault(x => x.FilmID == ID);
 
-			//var filmsWithActors = new FilmWithActors
-			//{
-			//	ListOfActors = _filmRentalAPIDbContext
+
+
+			//var actorfilm = _filmRentalAPIDbContext
 			//	.Actors
-			//	.ToList(),
-			//	Film = _filmRentalAPIDbContext
-			//	.Films
-			//	.Find(filmID),
-			//	ListOfFilmActor = _filmRentalAPIDbContext
-			//	.FilmsActors
-			//	.ToList()
+			//	.Where(x => x.ActorID == ID)
+			//	.Join(_filmRentalAPIDbContext.Films.
+
+		//var filmsWithActors = new FilmWithActors
+		//{
+		//	ListOfActors = _filmRentalAPIDbContext
+		//	.Actors
+		//	.ToList(),
+		//	Film = _filmRentalAPIDbContext
+		//	.Films
+		//	.Find(filmID),
+		//	ListOfFilmActor = _filmRentalAPIDbContext
+		//	.FilmsActors
+		//	.ToList()
 
 			//};
 
-			//return Ok(filmsWithActors);
-		//}
+			return Ok(film);
+		}
 
-		[HttpPost("Add Film")]
+		[HttpPost("Add_Film")]
 		public ActionResult<int> AddFilm([FromBody] AddFilmRequest request)
 		{
+			//Where, utgår från en lista för att göra en ny lista (utifrån villkor)
+			var actors = _filmRentalAPIDbContext.Actors.Where(x => request.ActorIDs.Contains(x.ActorID));
 			var film = new Film
 			{
 				FilmTitle = request.FilmTitle,
 				FilmDescription = request.FilmDescription,
 				FilmDuration = request.FilmDuration,
 				ReleaseYear = request.ReleaseYear,
-				FilmRating = request.FilmRating
+				FilmRating = request.FilmRating,
+				Actors = actors.ToList()
 			};
 			_filmRentalAPIDbContext.Films.Add(film);
 			_filmRentalAPIDbContext.SaveChanges();
-			return Ok(film);
+			return Ok(film.FilmID);
 		}
 
-		[HttpPatch("Edit Film Details")]
+		[HttpPatch("Edit_Film")]
 		public ActionResult<Film> EditFilm (int filmID, [FromBody] EditFilmRequest request)
 		{
 			var filmToEdit = _filmRentalAPIDbContext.Films.Find(filmID);
@@ -146,7 +154,7 @@ namespace FilmRentalAPI.Controllers
 
 
 
-		[HttpDelete("Delete Film with Specific ID")]
+		[HttpDelete("Delete_Film")]
 		public ActionResult DeleteFilm(int filmID)
 		{
 			var filmToBeDeleted = _filmRentalAPIDbContext.Films.Find(filmID);

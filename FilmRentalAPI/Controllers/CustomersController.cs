@@ -25,7 +25,7 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalAPIDbContext = filmRentalAPIDbContext;
 		}
 
-		[HttpGet("Get a List of All Customers")]
+		[HttpGet("List_Of_Customers")]
 		//Hämta en lista med alla customers från databasen 
 		public ActionResult<List<Customer>> GetCustomers()
 		{
@@ -48,27 +48,9 @@ namespace FilmRentalAPI.Controllers
 
 			return Ok (customerResponses);
 
-
-			//ANVÄNDER JAG DENNA KODEN FÅR JAG UPP RIKTIGA KODEN, MEN ANVÄNDER JAG DEN OVAN FÅR JAG ENDAST UPP 0
-			/*var customersFromDb = _filmRentalAPIDbContext.Customers.ToList();
-
-			try
-			{
-				var customers = _filmRentalAPIDbContext.Customers.ToList();
-				return Ok(customers);
-			}
-
-			//Logga att något har gått fel, står att den inte används men när man väl debuggar så får man mer information om ett fel uppstår.
-			catch (Exception ex)
-			{
-				throw;
-			}
-
-			return Ok(customersFromDb); */
-
 		}
 
-		[HttpGet("Retrieve Customer with Specific ID")]
+		[HttpGet("Retrieve_Customer_By_ID")]
 
 		//Hämtar all information som customerID är kopplad till
 		public ActionResult<Customer> GetCustomer(int customerID)
@@ -85,7 +67,9 @@ namespace FilmRentalAPI.Controllers
 			return Ok(customer);
 		}
 
-		[HttpPost("Add Customer")]
+		[HttpGet]
+
+		[HttpPost("Add_Customer")]
 		public ActionResult<int> AddCustomer([FromBody] AddCustomerRequest request)
 		{
 			var customer = new Customer
@@ -102,7 +86,7 @@ namespace FilmRentalAPI.Controllers
 			return Ok(customer);
 		}
 
-		[HttpPatch("Edit Customer Details")]
+		[HttpPatch("Edit_Customer")]
 		public ActionResult<Customer> EditCustomer(int customerID, [FromBody] EditCustomerRequest request)
 		{
 			var customerToEdit = _filmRentalAPIDbContext.Customers.Find(customerID);
@@ -134,7 +118,7 @@ namespace FilmRentalAPI.Controllers
 			return customerToEdit;
 		}
 
-		[HttpDelete("Delete Customer with Specific ID")]
+		[HttpDelete("Delete_Customer_By_ID")]
 		public ActionResult DeleteCustomer(int customerID)
 		{
 			var customerToBeDeleted = _filmRentalAPIDbContext.Customers.Find(customerID);

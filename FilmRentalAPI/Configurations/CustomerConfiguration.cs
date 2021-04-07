@@ -17,11 +17,11 @@ namespace FilmRentalAPI.Configurations
 			modelBuilder
 				.Property(customer => customer.CustomerID)
 				.UseIdentityColumn(63490, 1);
-
 			//Customer har många Rents men Rents har EN customer
 			modelBuilder
 				.HasMany(c => c.Rents)
-				.WithOne(r => r.Customer);
+				.WithOne(r => r.Customer)
+				.HasForeignKey(x => x.RentalID);
 		}
 	}
 }

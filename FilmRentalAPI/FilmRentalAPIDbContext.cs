@@ -44,7 +44,6 @@ namespace FilmRentalAPI
 				.ApplyConfiguration(new CustomerConfiguration());
 
 			modelBuilder
-
 				.ApplyConfiguration(new ActorConfiguration());
 
 			

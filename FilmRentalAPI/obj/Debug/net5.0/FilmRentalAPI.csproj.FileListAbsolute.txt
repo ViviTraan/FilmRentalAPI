@@ -1,10 +1,3 @@
-C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.csprojAssemblyReference.cache
-C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.AssemblyInfoInputs.cache
-C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.AssemblyInfo.cs
-C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.csproj.CoreCompileInputs.cache
-C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\appsettings.json
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\FilmRentalAPI.exe
@@ -15,6 +8,8 @@ C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\FilmRen
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\ref\FilmRentalAPI.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\FilmRentalAPI.pdb
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Humanizer.dll
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Microsoft.Data.SqlClient.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -30,6 +25,7 @@ C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Microso
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Microsoft.OpenApi.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -50,6 +46,12 @@ C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\runtime
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.AssemblyInfoInputs.cache
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.AssemblyInfo.cs
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.csproj.CoreCompileInputs.cache
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\staticwebassets\FilmRentalAPI.StaticWebAssets.Manifest.cache
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\staticwebassets\FilmRentalAPI.StaticWebAssets.xml
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\scopedcss\bundle\FilmRentalAPI.styles.css
@@ -59,3 +61,4 @@ C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRen
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\ref\FilmRentalAPI.dll
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.pdb
 C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.genruntimeconfig.cache
+C:\Users\misst\source\repos\FilmRentalAPI\FilmRentalAPI\obj\Debug\net5.0\FilmRentalAPI.csprojAssemblyReference.cache

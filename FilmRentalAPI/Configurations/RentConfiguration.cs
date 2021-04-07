@@ -19,10 +19,12 @@ namespace FilmRentalAPI.Configurations
 				.UseIdentityColumn(3455, 3);
 			modelBuilder
 				.HasOne(r => r.Customer)
-				.WithMany(c => c.Rents);
+				.WithMany(c => c.Rents)
+				.HasForeignKey(x => x.CustomerID);
 			modelBuilder
 				.HasOne(r => r.Film)
-				.WithMany(f => f.Rents);
+				.WithMany(f => f.Rents)
+				.HasForeignKey(x => x.FilmID);
 		}
 	}
 }
