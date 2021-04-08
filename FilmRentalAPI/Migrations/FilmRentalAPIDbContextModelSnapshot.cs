@@ -58,32 +58,6 @@ namespace FilmRentalAPI.Migrations
                     b.HasKey("ActorID");
 
                     b.ToTable("Actors");
-
-                    b.HasData(
-                        new
-                        {
-                            ActorID = 1,
-                            DateOfBirth = "1943-08-17",
-                            FirstName = "Robert",
-                            LastName = "De Niro",
-                            MostPopularFilm = "The Intern"
-                        },
-                        new
-                        {
-                            ActorID = 2,
-                            DateOfBirth = "1954-12-18",
-                            FirstName = "Ray",
-                            LastName = "Liotta",
-                            MostPopularFilm = "GoodFellas"
-                        },
-                        new
-                        {
-                            ActorID = 3,
-                            DateOfBirth = "1958-10-20",
-                            FirstName = "Viggo",
-                            LastName = "Mortensen",
-                            MostPopularFilm = "Lord Of The Rings"
-                        });
                 });
 
             modelBuilder.Entity("FilmRentalAPI.Models.Customer", b =>

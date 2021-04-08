@@ -70,7 +70,7 @@ namespace FilmRentalAPI.Controllers
 
 			_filmRentalDbContext.Actors.Add(actor);
 			_filmRentalDbContext.SaveChanges();
-			return Ok(actor);
+			return Ok($"You have now added Actor with ID: {actor}");
 		}
 
 		[HttpPatch("Edit_Actor")]

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FilmRentalAPI.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class FirstEverCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

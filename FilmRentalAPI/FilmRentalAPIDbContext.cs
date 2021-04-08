@@ -46,7 +46,7 @@ namespace FilmRentalAPI
 			modelBuilder
 				.ApplyConfiguration(new ActorConfiguration());
 
-			base.OnModelCreating(SeedConfiguration.Seed(modelBuilder));
+			
 			
 			
 		}
