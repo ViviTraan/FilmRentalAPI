@@ -103,7 +103,7 @@ namespace FilmRentalAPI.Controllers
 		[HttpPost("Add_Film")]
 		public ActionResult<int> AddFilm([FromBody] AddFilmRequest request)
 		{
-			//Where, utgår från en lista för att göra en ny lista (utifrån villkor)
+			
 			var actors = _filmRentalAPIDbContext.Actors.Where(x => request.ActorIDs.Contains(x.ActorID));
 			var film = new Film
 			{

@@ -22,6 +22,6 @@ namespace FilmRentalAPI.Models
 		public string FilmRating { get; set; }
 
 		public ICollection<Rent> Rents { get; set; }
-		public ICollection <Actor> Actors { get; set; }
+		public ICollection <Actor> Actors{ get; set; }
 	}
 }

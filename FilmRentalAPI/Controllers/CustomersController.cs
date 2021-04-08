@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace FilmRentalAPI.Controllers
 {
@@ -67,7 +68,26 @@ namespace FilmRentalAPI.Controllers
 			return Ok(customer);
 		}
 
-		[HttpGet]
+		[HttpGet("Get_Rental_Details_By_CustomerID")]
+		public ActionResult<Customer> GetRentalInformation(int customerID)
+		{
+			var customer = _filmRentalAPIDbContext
+				.Customers
+				.Include(x => x.Rents)
+				.ThenInclude(x => x.Film)
+				.FirstOrDefault(x => x.CustomerID == customerID);
+
+
+			return Ok(customer);
+
+			//var rent = _filmRentalAPIDbContext
+			//	.Rents
+			//	.Include(x => x.Film)
+			//	.Include(y => y.Customer)
+			//	.FirstOrDefault(x => x.RentalID == rentalID);
+
+			//return Ok(rent);
+		}
 
 		[HttpPost("Add_Customer")]
 		public ActionResult<int> AddCustomer([FromBody] AddCustomerRequest request)

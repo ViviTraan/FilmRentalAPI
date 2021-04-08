@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmRentalAPI.Migrations
 {
     [DbContext(typeof(FilmRentalAPIDbContext))]
-    [Migration("20210405101524_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210408174920_FirstEverCreate")]
+    partial class FirstEverCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,10 +129,10 @@ namespace FilmRentalAPI.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 3455)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CustomerID")
+                    b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FilmID")
+                    b.Property<int>("FilmID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RentalDate")
@@ -169,11 +169,15 @@ namespace FilmRentalAPI.Migrations
                 {
                     b.HasOne("FilmRentalAPI.Models.Customer", "Customer")
                         .WithMany("Rents")
-                        .HasForeignKey("CustomerID");
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FilmRentalAPI.Models.Film", "Film")
                         .WithMany("Rents")
-                        .HasForeignKey("FilmID");
+                        .HasForeignKey("FilmID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
