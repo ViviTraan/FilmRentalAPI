@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace FilmRentalAPI.Configurations
 {
-	public class ActorConfiguration : IEntityTypeConfiguration<Actor>
+	public class ActorFilmConfiguration : IEntityTypeConfiguration<ActorFilm>
 	{
-		public void Configure(EntityTypeBuilder<Actor> modelBuilder)
+		public void Configure(EntityTypeBuilder<ActorFilm> modelBuilder)
 		{
 			modelBuilder
-				.HasKey(actor => actor.ActorID);
+				.HasKey(f => new {f.Film.FilmID, f.Actor.ActorID });
 			modelBuilder
-				.Property(actor => actor.ActorID)
-				.UseIdentityColumn(1, 1);
+				.HasOne(x => x.Actor)
+				.WithMany(af => af.ActorFilms);
 			modelBuilder
-				.HasMany(a => a.ActorFilms)
-				.WithOne(f => f.Actor);
+				.HasOne(f => f.Film)
+				.WithMany(af => af.ActorFilms);
 				
 		}
 	}

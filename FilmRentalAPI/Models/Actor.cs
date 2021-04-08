@@ -14,6 +14,6 @@ namespace FilmRentalAPI.Models
 		public string MostPopularFilm { get; set; }
 
 		
-		public ICollection <Film> Films { get; set; }
+		public ICollection <ActorFilm> ActorFilms { get; set; }
 	}
 }

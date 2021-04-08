@@ -11,7 +11,7 @@ namespace FilmRentalAPI.Models
 		public Film()
 		{
 			Rents = new List<Rent>();
-			Actors = new List<Actor>();
+			ActorFilms = new List<ActorFilm>();
 		}
 
 		public int FilmID { get; set; }
@@ -22,6 +22,6 @@ namespace FilmRentalAPI.Models
 		public string FilmRating { get; set; }
 
 		public ICollection<Rent> Rents { get; set; }
-		public ICollection <Actor> Actors { get; set; }
+		public ICollection <ActorFilm> ActorFilms { get; set; }
 	}
 }

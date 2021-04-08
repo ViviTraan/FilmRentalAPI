@@ -28,7 +28,7 @@ namespace FilmRentalAPI
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(@"Server=DESKTOP-SMG913T;Database=FilmRentalAPIDB;Trusted_Connection=True;");
+			optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=FilmRentalAPIDB;Trusted_Connection=True;");
 		}
 
 		//Här använder vi inställningarna ifrån de olika Configurations vi skapar.
@@ -46,6 +46,7 @@ namespace FilmRentalAPI
 			modelBuilder
 				.ApplyConfiguration(new ActorConfiguration());
 
+			SeedConfiguration.Seed(modelBuilder);
 			
 		}
 

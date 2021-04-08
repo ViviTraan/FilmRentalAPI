@@ -89,8 +89,8 @@ namespace FilmRentalAPI.Migrations
                         .Annotation("SqlServer:Identity", "3455, 3"),
                     RentalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustomerID = table.Column<int>(type: "int", nullable: true),
-                    FilmID = table.Column<int>(type: "int", nullable: true)
+                    FilmID = table.Column<int>(type: "int", nullable: false),
+                    CustomerID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,13 +100,13 @@ namespace FilmRentalAPI.Migrations
                         column: x => x.CustomerID,
                         principalTable: "Customers",
                         principalColumn: "CustomerID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Rents_Films_FilmID",
                         column: x => x.FilmID,
                         principalTable: "Films",
                         principalColumn: "FilmID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

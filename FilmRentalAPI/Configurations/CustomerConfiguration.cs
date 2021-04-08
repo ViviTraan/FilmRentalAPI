@@ -21,7 +21,8 @@ namespace FilmRentalAPI.Configurations
 			modelBuilder
 				.HasMany(c => c.Rents)
 				.WithOne(r => r.Customer)
-				.HasForeignKey(x => x.RentalID);
+				.HasForeignKey(x => x.CustomerID);
+		
 		}
 	}
 }
