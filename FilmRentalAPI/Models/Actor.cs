@@ -7,6 +7,10 @@ namespace FilmRentalAPI.Models
 {
 	public class Actor
 	{
+		public Actor()
+		{
+			Films = new List<Film>();
+		}
 		public int ActorID { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
