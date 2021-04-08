@@ -18,8 +18,8 @@ namespace FilmRentalAPI.Configurations
 				.Property(actor => actor.ActorID)
 				.UseIdentityColumn(1, 1);
 			modelBuilder
-				.HasMany(a => a.ActorFilms)
-				.WithOne(f => f.Actor);
+				.HasMany(a => a.Films)
+				.WithMany(f => f.Actors);
 				
 		}
 	}

@@ -21,8 +21,8 @@ namespace FilmRentalAPI.Configurations
 				.HasMany(f => f.Rents)
 				.WithOne(r => r.Film);
 			modelBuilder
-				.HasMany(f => f.ActorFilms)
-				.WithOne(a => a.Film);
+				.HasMany(f => f.Actors)
+				.WithMany(a => a.Films);
 		}
 	}
 }

@@ -74,7 +74,7 @@ namespace FilmRentalAPI.Controllers
 		[HttpGet("View_Actors_in_Film_by_ID")]
 		public ActionResult<FilmWithActorsResponse> GetFilmWithActorsByID(int ID)
 		{
-			var film = _filmRentalAPIDbContext.Films.Include(x => x.ActorFilms).FirstOrDefault(x => x.FilmID == ID);
+			var film = _filmRentalAPIDbContext.Films.Include(x => x.Actors).FirstOrDefault(x => x.FilmID == ID);
 
 
 
@@ -103,25 +103,7 @@ namespace FilmRentalAPI.Controllers
 		[HttpPost("Add_Film")]
 		public ActionResult<int> AddFilm([FromBody] AddFilmRequest request)
 		{
-			var actorfilms = new ActorFilm() 
-			{ 
-				Film = new Film
-				{
-					FilmTitle = request.FilmTitle,
-					FilmDescription = request.FilmDescription,
-					FilmDuration = request.FilmDuration,
-					ReleaseYear = request.ReleaseYear,
-					FilmRating = request.FilmRating,
-					
-				},
-
-				Actor = new Actor
-				{ 
-					
-				}
-
-		}
-
+			
 			var actors = _filmRentalAPIDbContext.Actors.Where(x => request.ActorIDs.Contains(x.ActorID));
 			var film = new Film
 			{
@@ -130,7 +112,7 @@ namespace FilmRentalAPI.Controllers
 				FilmDuration = request.FilmDuration,
 				ReleaseYear = request.ReleaseYear,
 				FilmRating = request.FilmRating,
-				ActorFilms = actors.ToList()
+				Actors = actors.ToList()
 			};
 			_filmRentalAPIDbContext.Films.Add(film);
 			_filmRentalAPIDbContext.SaveChanges();
