@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\misst\\source\\repos\\FilmRentalAPI\\FilmRentalAPI\\FilmRentalAPI.csproj": {}
+    "C:\\Users\\misst\\source\\repos\\FilmRentalAPI1\\FilmRentalAPI\\FilmRentalAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\misst\\source\\repos\\FilmRentalAPI\\FilmRentalAPI\\FilmRentalAPI.csproj": {
+    "C:\\Users\\misst\\source\\repos\\FilmRentalAPI1\\FilmRentalAPI\\FilmRentalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI\\FilmRentalAPI\\FilmRentalAPI.csproj",
+        "projectUniqueName": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI1\\FilmRentalAPI\\FilmRentalAPI.csproj",
         "projectName": "FilmRentalAPI",
-        "projectPath": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI\\FilmRentalAPI\\FilmRentalAPI.csproj",
+        "projectPath": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI1\\FilmRentalAPI\\FilmRentalAPI.csproj",
         "packagesPath": "C:\\Users\\misst\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI\\FilmRentalAPI\\obj\\",
+        "outputPath": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI1\\FilmRentalAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\misst\\AppData\\Roaming\\NuGet\\NuGet.Config",

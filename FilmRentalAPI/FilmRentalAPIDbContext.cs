@@ -1,10 +1,6 @@
 ﻿using FilmRentalAPI.Configurations;
 using FilmRentalAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FilmRentalAPI
 {
@@ -19,12 +15,10 @@ namespace FilmRentalAPI
 
 		}
 
-		public DbSet<Film> Films {get; set;}
+		public DbSet<Film> Films { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Rent> Rents { get; set; }
 		public DbSet<Actor> Actors { get; set; }
-		
-
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -46,9 +40,9 @@ namespace FilmRentalAPI
 			modelBuilder
 				.ApplyConfiguration(new ActorConfiguration());
 
-			
-			
-			
+
+
+
 		}
 
 	}

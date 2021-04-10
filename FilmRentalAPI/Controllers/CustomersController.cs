@@ -1,33 +1,27 @@
-﻿using FilmRentalAPI.Requests.EditRequests;
-using FilmRentalAPI.Models;
-using FilmRentalAPI.Requests;
+﻿using FilmRentalAPI.Models;
 using FilmRentalAPI.Requests.AddRequests;
+using FilmRentalAPI.Requests.EditRequests;
 using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace FilmRentalAPI.Controllers
 {
 	[ApiController]
-	[Route("")]
+	[Route("controller")]
 	public class CustomersController : ControllerBase
 	{
 
-		//Skapa en variabel så att du kommer åt din databas som heter "_filmRentalDbContext"
 		private FilmRentalAPIDbContext _filmRentalAPIDbContext;
 
-		//Efter raderna nedan har man möjlighet att använda databasen
 		public CustomersController(FilmRentalAPIDbContext filmRentalAPIDbContext)
 		{
 			_filmRentalAPIDbContext = filmRentalAPIDbContext;
 		}
 
 		[HttpGet("List_Of_Customers")]
-		//Hämta en lista med alla customers från databasen 
 		public ActionResult<List<Customer>> GetCustomers()
 		{
 			var customersFromDb = _filmRentalAPIDbContext.Customers.ToList();
@@ -47,13 +41,11 @@ namespace FilmRentalAPI.Controllers
 				customerResponses.Add(customerResponse);
 			}
 
-			return Ok (customerResponses);
+			return Ok(customerResponses);
 
 		}
 
 		[HttpGet("Retrieve_Customer_By_ID")]
-
-		//Hämtar all information som customerID är kopplad till
 		public ActionResult<Customer> GetCustomer(int customerID)
 		{
 			var customer = _filmRentalAPIDbContext
@@ -79,14 +71,6 @@ namespace FilmRentalAPI.Controllers
 
 
 			return Ok(customer);
-
-			//var rent = _filmRentalAPIDbContext
-			//	.Rents
-			//	.Include(x => x.Film)
-			//	.Include(y => y.Customer)
-			//	.FirstOrDefault(x => x.RentalID == rentalID);
-
-			//return Ok(rent);
 		}
 
 		[HttpPost("Add_Customer")]
@@ -110,7 +94,7 @@ namespace FilmRentalAPI.Controllers
 		public ActionResult<Customer> EditCustomer(int customerID, [FromBody] EditCustomerRequest request)
 		{
 			var customerToEdit = _filmRentalAPIDbContext.Customers.Find(customerID);
-			
+
 			if (request.FirstName != null && request.FirstName != "string")
 			{
 				customerToEdit.FirstName = request.FirstName;

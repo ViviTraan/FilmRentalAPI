@@ -1,32 +1,25 @@
-﻿using FilmRentalAPI.Requests.EditRequests;
-using FilmRentalAPI.Models;
-using FilmRentalAPI.Requests;
+﻿using FilmRentalAPI.Models;
 using FilmRentalAPI.Requests.AddRequests;
+using FilmRentalAPI.Requests.EditRequests;
+using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using FilmRentalAPI.Responses;
-using Microsoft.EntityFrameworkCore;
-using FilmRentalAPI.Requests.JoinRequests;
-
 namespace FilmRentalAPI.Controllers
 {
 	[ApiController]
-	[Route("")]
+	[Route("controller")]
 	public class RentsController : ControllerBase
 	{
 
 		private FilmRentalAPIDbContext _filmRentalAPIDbContext;
-
 		public RentsController(FilmRentalAPIDbContext filmRentalAPIDbContext)
 		{
 			_filmRentalAPIDbContext = filmRentalAPIDbContext;
 		}
 
 		[HttpGet("List_Of_Rentals")]
-		//Hämta en lista på alla uthyrningsinfo
 		public ActionResult<List<Rent>> GetRent()
 		{
 			var rentsFromDb = _filmRentalAPIDbContext.Rents.ToList();
@@ -46,19 +39,8 @@ namespace FilmRentalAPI.Controllers
 			}
 
 			return Ok(rentResponses);
-			
-			/*try
-			{
-				var rents = _filmRentalAPIDbContext.Rents.ToList();
-				return Ok(rents);
-			}
-			catch (Exception ex)
-			{
-				throw;
-			}*/
 		}
 
-		//Hämtar infon för utvalt ID
 		[HttpGet("Retrieve_Rental_By_ID")]
 		public ActionResult<Rent> GetRent(int rentalID)
 		{
@@ -121,7 +103,7 @@ namespace FilmRentalAPI.Controllers
 			}
 
 			return rentToEdit;
-		
+
 		}
 
 		[HttpDelete("Delete_Rental")]

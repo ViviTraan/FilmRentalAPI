@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FilmRentalAPI.Responses
+﻿namespace FilmRentalAPI.Responses
 {
 	public class CustomerResponse
 	{

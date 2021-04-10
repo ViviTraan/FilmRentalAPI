@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FilmRentalAPI.Requests.AddRequests
 {
@@ -12,7 +9,6 @@ namespace FilmRentalAPI.Requests.AddRequests
 		public string FilmDescription { get; set; }
 		public int ReleaseYear { get; set; }
 		public string FilmRating { get; set; }
-
-		public ICollection<int> ActorIDs {get;set;}
+		public ICollection<int> ActorIDs { get; set; }
 	}
 }

@@ -1,19 +1,16 @@
 ﻿using FilmRentalAPI.Models;
-using FilmRentalAPI.Requests;
 using FilmRentalAPI.Requests.AddRequests;
 using FilmRentalAPI.Requests.EditRequests;
 using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FilmRentalAPI.Controllers
 {
 	[ApiController]
-	[Route("")]
+	[Route("controller")]
 	public class FilmsController : ControllerBase
 	{
 		private FilmRentalAPIDbContext _filmRentalAPIDbContext;
@@ -42,17 +39,7 @@ namespace FilmRentalAPI.Controllers
 				filmResponses.Add(filmResponse);
 			}
 
-			return Ok (filmResponses);
-
-			/*try
-			{
-				var films = _filmRentalAPIDbContext.Films.ToList();
-				return Ok(films);
-			}
-			catch (Exception ex)
-			{
-				throw;
-			}*/
+			return Ok(filmResponses);
 
 		}
 		[HttpGet("Retrieve_Film_By_ID")]
@@ -70,40 +57,17 @@ namespace FilmRentalAPI.Controllers
 			return Ok(film);
 		}
 
-		//Namn får inte ha några mellanslag
 		[HttpGet("View_Actors_in_Film_by_ID")]
 		public ActionResult<FilmWithActorsResponse> GetFilmWithActorsByID(int ID)
 		{
 			var film = _filmRentalAPIDbContext.Films.Include(x => x.Actors).FirstOrDefault(x => x.FilmID == ID);
-
-
-
-			//var actorfilm = _filmRentalAPIDbContext
-			//	.Actors
-			//	.Where(x => x.ActorID == ID)
-			//	.Join(_filmRentalAPIDbContext.Films.
-
-		//var filmsWithActors = new FilmWithActors
-		//{
-		//	ListOfActors = _filmRentalAPIDbContext
-		//	.Actors
-		//	.ToList(),
-		//	Film = _filmRentalAPIDbContext
-		//	.Films
-		//	.Find(filmID),
-		//	ListOfFilmActor = _filmRentalAPIDbContext
-		//	.FilmsActors
-		//	.ToList()
-
-			//};
-
 			return Ok(film);
 		}
 
 		[HttpPost("Add_Film")]
 		public ActionResult<int> AddFilm([FromBody] AddFilmRequest request)
 		{
-			
+
 			var actors = _filmRentalAPIDbContext.Actors.Where(x => request.ActorIDs.Contains(x.ActorID));
 			var film = new Film
 			{
@@ -120,7 +84,7 @@ namespace FilmRentalAPI.Controllers
 		}
 
 		[HttpPatch("Edit_Film")]
-		public ActionResult<Film> EditFilm (int filmID, [FromBody] EditFilmRequest request)
+		public ActionResult<Film> EditFilm(int filmID, [FromBody] EditFilmRequest request)
 		{
 			var filmToEdit = _filmRentalAPIDbContext.Films.Find(filmID);
 

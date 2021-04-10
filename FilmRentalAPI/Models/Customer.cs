@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FilmRentalAPI.Models
 {
@@ -17,7 +14,6 @@ namespace FilmRentalAPI.Models
 		public string PhoneNumber { get; set; }
 		public string Email { get; set; }
 		public string Adress { get; set; }
-
 		public ICollection<Rent> Rents { get; set; }
 	}
 }

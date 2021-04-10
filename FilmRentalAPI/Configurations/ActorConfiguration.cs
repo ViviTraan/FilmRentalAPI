@@ -1,10 +1,6 @@
 ﻿using FilmRentalAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FilmRentalAPI.Configurations
 {
@@ -20,7 +16,7 @@ namespace FilmRentalAPI.Configurations
 			modelBuilder
 				.HasMany(a => a.Films)
 				.WithMany(f => f.Actors);
-				
+
 		}
 	}
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FilmRentalAPI.Models
 {
@@ -20,8 +17,7 @@ namespace FilmRentalAPI.Models
 		public string FilmDuration { get; set; }
 		public int ReleaseYear { get; set; }
 		public string FilmRating { get; set; }
-
 		public ICollection<Rent> Rents { get; set; }
-		public ICollection <Actor> Actors{ get; set; }
+		public ICollection<Actor> Actors { get; set; }
 	}
 }

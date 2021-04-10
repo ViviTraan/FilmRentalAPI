@@ -1,10 +1,6 @@
 ﻿using FilmRentalAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FilmRentalAPI.Configurations
 {
@@ -17,12 +13,11 @@ namespace FilmRentalAPI.Configurations
 			modelBuilder
 				.Property(customer => customer.CustomerID)
 				.UseIdentityColumn(63490, 1);
-			//Customer har många Rents men Rents har EN customer
 			modelBuilder
 				.HasMany(c => c.Rents)
 				.WithOne(r => r.Customer)
 				.HasForeignKey(x => x.CustomerID);
-		
+
 		}
 	}
 }

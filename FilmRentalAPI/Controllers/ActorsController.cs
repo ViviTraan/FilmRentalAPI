@@ -3,19 +3,17 @@ using FilmRentalAPI.Requests.AddRequests;
 using FilmRentalAPI.Requests.EditRequests;
 using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FilmRentalAPI.Controllers
 {
 	[ApiController]
-	[Route("")]
+	[Route("controller")]
 	public class ActorsController : ControllerBase
 	{
 		private FilmRentalAPIDbContext _filmRentalDbContext;
-		
+
 		public ActorsController(FilmRentalAPIDbContext filmRentalAPIDbContext)
 		{
 			_filmRentalDbContext = filmRentalAPIDbContext;
@@ -77,8 +75,8 @@ namespace FilmRentalAPI.Controllers
 		public ActionResult<Actor> EditActor(int actorID, [FromBody] EditActorRequest request)
 		{
 			var actorToEdit = _filmRentalDbContext.Actors.Find(actorID);
-			
-			if(request.FirstName != null && request.FirstName != "string")
+
+			if (request.FirstName != null && request.FirstName != "string")
 			{
 				actorToEdit.FirstName = request.FirstName;
 			}
