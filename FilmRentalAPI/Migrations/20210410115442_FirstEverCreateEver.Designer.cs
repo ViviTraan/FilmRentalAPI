@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmRentalAPI.Migrations
 {
     [DbContext(typeof(FilmRentalAPIDbContext))]
-    [Migration("20210408184016_FirstEverCreate")]
-    partial class FirstEverCreate
+    [Migration("20210410115442_FirstEverCreateEver")]
+    partial class FirstEverCreateEver
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
