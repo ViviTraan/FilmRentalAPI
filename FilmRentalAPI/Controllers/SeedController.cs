@@ -15,7 +15,7 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalAPIDbContext = filmRentalAPIDbContext;
 		}
 
-		[HttpGet]
+		[HttpGet("Put_Value_in_For_Lazy_Teacher")]
 		public ActionResult SeedDb()
 		{
 
