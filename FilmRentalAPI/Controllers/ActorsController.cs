@@ -3,6 +3,7 @@ using FilmRentalAPI.Requests.AddRequests;
 using FilmRentalAPI.Requests.EditRequests;
 using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,22 +59,30 @@ namespace FilmRentalAPI.Controllers
 		[HttpPost("Add_Actor")]
 		public ActionResult<int> AddActor([FromBody] AddActorRequest request)
 		{
-			var actor = new Actor
+			try
 			{
-				FirstName = request.FirstName,
-				LastName = request.LastName,
-				DateOfBirth = request.DateOfBirth,
-				MostPopularFilm = request.MostPopularFilm
-			};
+				var actor = new Actor
+				{
+					FirstName = request.FirstName,
+					LastName = request.LastName,
+					DateOfBirth = request.DateOfBirth,
+					MostPopularFilm = request.MostPopularFilm
+				};
 
-			_filmRentalDbContext.Actors.Add(actor);
-			_filmRentalDbContext.SaveChanges();
-			return Ok($"You have now added Actor with ID: {actor}");
+				_filmRentalDbContext.Actors.Add(actor);
+				_filmRentalDbContext.SaveChanges();
+				return Ok($"You have now added Actor with ID: {actor}");
+			}
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 		}
 
 		[HttpPatch("Edit_Actor")]
 		public ActionResult<Actor> EditActor(int actorID, [FromBody] EditActorRequest request)
 		{
+			try { 
 			var actorToEdit = _filmRentalDbContext.Actors.Find(actorID);
 
 			if (request.FirstName != null && request.FirstName != "string")
@@ -97,18 +106,32 @@ namespace FilmRentalAPI.Controllers
 			_filmRentalDbContext.SaveChanges();
 
 			return actorToEdit;
+			}
+
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 		}
 		[HttpDelete("Delete_Actor_By_ID")]
 		public ActionResult DeleteActor(int actorID)
 		{
-			var actorToBeDeleted = _filmRentalDbContext.Actors.Find(actorID);
-			if (actorToBeDeleted == null)
+			try
 			{
-				return BadRequest($"Could not find actor with Id {actorID}");
+				var actorToBeDeleted = _filmRentalDbContext.Actors.Find(actorID);
+				if (actorToBeDeleted == null)
+				{
+					return BadRequest($"Could not find actor with Id {actorID}");
+				}
+				_filmRentalDbContext.Actors.Remove(actorToBeDeleted);
+				_filmRentalDbContext.SaveChanges();
+				return Ok($"You have now deleted actor with ID: {actorID}");
 			}
-			_filmRentalDbContext.Actors.Remove(actorToBeDeleted);
-			_filmRentalDbContext.SaveChanges();
-			return Ok($"You have now deleted actor with ID: {actorID}");
+
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 		}
 	}
 }

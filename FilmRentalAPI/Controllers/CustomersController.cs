@@ -4,6 +4,7 @@ using FilmRentalAPI.Requests.EditRequests;
 using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -76,63 +77,91 @@ namespace FilmRentalAPI.Controllers
 		[HttpPost("Add_Customer")]
 		public ActionResult<int> AddCustomer([FromBody] AddCustomerRequest request)
 		{
-			var customer = new Customer
+			try
 			{
-				FirstName = request.FirstName,
-				LastName = request.LastName,
-				PhoneNumber = request.PhoneNumber,
-				Email = request.Email,
-				Adress = request.Adress
-			};
+				var customer = new Customer
+				{
+					FirstName = request.FirstName,
+					LastName = request.LastName,
+					PhoneNumber = request.PhoneNumber,
+					Email = request.Email,
+					Adress = request.Adress
+				};
 
-			_filmRentalAPIDbContext.Customers.Add(customer);
-			_filmRentalAPIDbContext.SaveChanges();
-			return Ok(customer);
+
+				_filmRentalAPIDbContext.Customers.Add(customer);
+				_filmRentalAPIDbContext.SaveChanges();
+
+				return Ok(customer);
+
+			}
+
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
+
 		}
 
 		[HttpPatch("Edit_Customer")]
 		public ActionResult<Customer> EditCustomer(int customerID, [FromBody] EditCustomerRequest request)
 		{
-			var customerToEdit = _filmRentalAPIDbContext.Customers.Find(customerID);
+			try
+			{
+				var customerToEdit = _filmRentalAPIDbContext.Customers.Find(customerID);
 
-			if (request.FirstName != null && request.FirstName != "string")
-			{
-				customerToEdit.FirstName = request.FirstName;
-			}
-			if (request.LastName != null && request.LastName != "string")
-			{
-				customerToEdit.LastName = request.LastName;
-			}
-			if (request.PhoneNumber != null && request.PhoneNumber != "string")
-			{
-				customerToEdit.PhoneNumber = request.PhoneNumber;
-			}
-			if (request.Email != null && request.Email != "string")
-			{
-				customerToEdit.Email = request.Email;
-			}
-			if (request.Adress != null && request.Adress != "string")
-			{
-				customerToEdit.Adress = request.Adress;
+				if (request.FirstName != null && request.FirstName != "string")
+				{
+					customerToEdit.FirstName = request.FirstName;
+				}
+				if (request.LastName != null && request.LastName != "string")
+				{
+					customerToEdit.LastName = request.LastName;
+				}
+				if (request.PhoneNumber != null && request.PhoneNumber != "string")
+				{
+					customerToEdit.PhoneNumber = request.PhoneNumber;
+				}
+				if (request.Email != null && request.Email != "string")
+				{
+					customerToEdit.Email = request.Email;
+				}
+				if (request.Adress != null && request.Adress != "string")
+				{
+					customerToEdit.Adress = request.Adress;
+				}
+
+				_filmRentalAPIDbContext.Customers.Update(customerToEdit);
+				_filmRentalAPIDbContext.SaveChanges();
+
+				return customerToEdit;
 			}
 
-			_filmRentalAPIDbContext.Customers.Update(customerToEdit);
-			_filmRentalAPIDbContext.SaveChanges();
-
-			return customerToEdit;
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 		}
 
 		[HttpDelete("Delete_Customer_By_ID")]
 		public ActionResult DeleteCustomer(int customerID)
 		{
-			var customerToBeDeleted = _filmRentalAPIDbContext.Customers.Find(customerID);
-			if (customerToBeDeleted == null)
+			try
 			{
-				return BadRequest($"Could not find customer with Id {customerID}");
+				var customerToBeDeleted = _filmRentalAPIDbContext.Customers.Find(customerID);
+				if (customerToBeDeleted == null)
+				{
+					return BadRequest($"Could not find customer with Id {customerID}");
+				}
+				_filmRentalAPIDbContext.Customers.Remove(customerToBeDeleted);
+				_filmRentalAPIDbContext.SaveChanges();
+				return Ok($"You have now deleted customer with ID: {customerID}");
 			}
-			_filmRentalAPIDbContext.Customers.Remove(customerToBeDeleted);
-			_filmRentalAPIDbContext.SaveChanges();
-			return Ok($"You have now deleted customer with ID: {customerID}");
+
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 
 		}
 

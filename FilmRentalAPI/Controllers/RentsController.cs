@@ -4,6 +4,7 @@ using FilmRentalAPI.Requests.EditRequests;
 using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 namespace FilmRentalAPI.Controllers
@@ -71,38 +72,54 @@ namespace FilmRentalAPI.Controllers
 		[HttpPost("Add_Rental")]
 		public ActionResult<int> AddRent([FromBody] AddRentRequest request)
 		{
-			var customer = _filmRentalAPIDbContext.Customers.Find(request.CustomerID);
-			var film = _filmRentalAPIDbContext.Films.Find(request.FilmID);
-			var rent = new Rent
-
+			try
 			{
-				Customer = customer,
-				Film = film,
-				RentalDate = request.RentalDate,
-				ReturnDate = request.ReturnDate
-			};
+				var customer = _filmRentalAPIDbContext.Customers.Find(request.CustomerID);
+				var film = _filmRentalAPIDbContext.Films.Find(request.FilmID);
+				var rent = new Rent
 
-			_filmRentalAPIDbContext.Rents.Add(rent);
-			_filmRentalAPIDbContext.SaveChanges();
+				{
+					Customer = customer,
+					Film = film,
+					RentalDate = request.RentalDate,
+					ReturnDate = request.ReturnDate
+				};
 
-			return Ok(rent);
+				_filmRentalAPIDbContext.Rents.Add(rent);
+				_filmRentalAPIDbContext.SaveChanges();
+
+				return Ok(rent);
+			}
+
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 		}
 
 		[HttpPatch("Edit_Rental")]
 		public ActionResult<Rent> EditRent(int rentalID, [FromBody] EditRentRequest request)
 		{
-			var rentToEdit = _filmRentalAPIDbContext.Rents.Find(rentalID);
-			if (request.RentalDate < request.ReturnDate)
+			try
 			{
-				rentToEdit.RentalDate = request.RentalDate;
-				rentToEdit.ReturnDate = request.ReturnDate;
+				var rentToEdit = _filmRentalAPIDbContext.Rents.Find(rentalID);
+				if (request.RentalDate < request.ReturnDate)
+				{
+					rentToEdit.RentalDate = request.RentalDate;
+					rentToEdit.ReturnDate = request.ReturnDate;
 
-				_filmRentalAPIDbContext.Rents.Update(rentToEdit);
-				_filmRentalAPIDbContext.SaveChanges();
+					_filmRentalAPIDbContext.Rents.Update(rentToEdit);
+					_filmRentalAPIDbContext.SaveChanges();
 
+				}
+
+				return rentToEdit;
 			}
 
-			return rentToEdit;
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 
 		}
 
@@ -110,16 +127,23 @@ namespace FilmRentalAPI.Controllers
 
 		public ActionResult DeleteRent(int rentalID)
 		{
-			var rentToBeDeleted = _filmRentalAPIDbContext.Rents.Find(rentalID);
-			if (rentToBeDeleted == null)
+			try
 			{
-				return BadRequest($"Could not get info on rentalID {rentalID}");
+				var rentToBeDeleted = _filmRentalAPIDbContext.Rents.Find(rentalID);
+				if (rentToBeDeleted == null)
+				{
+					return BadRequest($"Could not get info on rentalID {rentalID}");
+				}
+				_filmRentalAPIDbContext.Rents.Remove(rentToBeDeleted);
+				_filmRentalAPIDbContext.SaveChanges();
+
+				return Ok($"You have now deleted ID:{rentalID}");
 			}
-			_filmRentalAPIDbContext.Rents.Remove(rentToBeDeleted);
-			_filmRentalAPIDbContext.SaveChanges();
 
-			return Ok($"You have now deleted ID:{rentalID}");
-
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 
 		}
 	}

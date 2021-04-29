@@ -5653,11 +5653,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\misst\\Source\\Repos\\FilmRentalAPI1\\FilmRentalAPI\\FilmRentalAPI.csproj",
+      "projectUniqueName": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI1\\FilmRentalAPI\\FilmRentalAPI.csproj",
       "projectName": "FilmRentalAPI",
-      "projectPath": "C:\\Users\\misst\\Source\\Repos\\FilmRentalAPI1\\FilmRentalAPI\\FilmRentalAPI.csproj",
+      "projectPath": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI1\\FilmRentalAPI\\FilmRentalAPI.csproj",
       "packagesPath": "C:\\Users\\misst\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\misst\\Source\\Repos\\FilmRentalAPI1\\FilmRentalAPI\\obj\\",
+      "outputPath": "C:\\Users\\misst\\source\\repos\\FilmRentalAPI1\\FilmRentalAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\misst\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5727,7 +5727,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

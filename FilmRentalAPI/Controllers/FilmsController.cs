@@ -4,6 +4,7 @@ using FilmRentalAPI.Requests.EditRequests;
 using FilmRentalAPI.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -67,53 +68,66 @@ namespace FilmRentalAPI.Controllers
 		[HttpPost("Add_Film")]
 		public ActionResult<int> AddFilm([FromBody] AddFilmRequest request)
 		{
-
-			var actors = _filmRentalAPIDbContext.Actors.Where(x => request.ActorIDs.Contains(x.ActorID));
-			var film = new Film
+			try
 			{
-				FilmTitle = request.FilmTitle,
-				FilmDescription = request.FilmDescription,
-				FilmDuration = request.FilmDuration,
-				ReleaseYear = request.ReleaseYear,
-				FilmRating = request.FilmRating,
-				Actors = actors.ToList()
-			};
-			_filmRentalAPIDbContext.Films.Add(film);
-			_filmRentalAPIDbContext.SaveChanges();
-			return Ok(film.FilmID);
+				var actors = _filmRentalAPIDbContext.Actors.Where(x => request.ActorIDs.Contains(x.ActorID));
+				var film = new Film
+				{
+					FilmTitle = request.FilmTitle,
+					FilmDescription = request.FilmDescription,
+					FilmDuration = request.FilmDuration,
+					ReleaseYear = request.ReleaseYear,
+					FilmRating = request.FilmRating,
+					Actors = actors.ToList()
+				};
+				_filmRentalAPIDbContext.Films.Add(film);
+				_filmRentalAPIDbContext.SaveChanges();
+				return Ok(film.FilmID);
+			}
+
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 		}
 
 		[HttpPatch("Edit_Film")]
 		public ActionResult<Film> EditFilm(int filmID, [FromBody] EditFilmRequest request)
 		{
-			var filmToEdit = _filmRentalAPIDbContext.Films.Find(filmID);
+			try
+			{
+				var filmToEdit = _filmRentalAPIDbContext.Films.Find(filmID);
+				if (request.FilmTitle != null && request.FilmTitle != "string")
+				{
+					filmToEdit.FilmTitle = request.FilmTitle;
+				}
+				if (request.FilmDescription != null && request.FilmDescription != "string")
+				{
+					filmToEdit.FilmDescription = request.FilmDescription;
+				}
+				if (request.FilmDuration != null && request.FilmDuration != "string")
+				{
+					filmToEdit.FilmDuration = request.FilmDuration;
+				}
+				if (request.ReleaseYear != 0)
+				{
+					filmToEdit.ReleaseYear = request.ReleaseYear;
+				}
+				if (request.FilmRating != null && request.FilmRating != "string")
+				{
+					filmToEdit.FilmRating = request.FilmRating;
+				}
 
+				_filmRentalAPIDbContext.Films.Update(filmToEdit);
+				_filmRentalAPIDbContext.SaveChanges();
 
-			if (request.FilmTitle != null && request.FilmTitle != "string")
-			{
-				filmToEdit.FilmTitle = request.FilmTitle;
-			}
-			if (request.FilmDescription != null && request.FilmDescription != "string")
-			{
-				filmToEdit.FilmDescription = request.FilmDescription;
-			}
-			if (request.FilmDuration != null && request.FilmDuration != "string")
-			{
-				filmToEdit.FilmDuration = request.FilmDuration;
-			}
-			if (request.ReleaseYear != 0)
-			{
-				filmToEdit.ReleaseYear = request.ReleaseYear;
-			}
-			if (request.FilmRating != null && request.FilmRating != "string")
-			{
-				filmToEdit.FilmRating = request.FilmRating;
+				return filmToEdit;
 			}
 
-			_filmRentalAPIDbContext.Films.Update(filmToEdit);
-			_filmRentalAPIDbContext.SaveChanges();
-
-			return filmToEdit;
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 		}
 
 
@@ -121,14 +135,22 @@ namespace FilmRentalAPI.Controllers
 		[HttpDelete("Delete_Film")]
 		public ActionResult DeleteFilm(int filmID)
 		{
-			var filmToBeDeleted = _filmRentalAPIDbContext.Films.Find(filmID);
-			if (filmToBeDeleted == null)
+			try
 			{
-				return BadRequest($"Could not find film with ID {filmID}");
+				var filmToBeDeleted = _filmRentalAPIDbContext.Films.Find(filmID);
+				if (filmToBeDeleted == null)
+				{
+					return BadRequest($"Could not find film with ID {filmID}");
+				}
+				_filmRentalAPIDbContext.Films.Remove(filmToBeDeleted);
+				_filmRentalAPIDbContext.SaveChanges();
+				return Ok($"You have now deleted Film with ID: {filmID}");
 			}
-			_filmRentalAPIDbContext.Films.Remove(filmToBeDeleted);
-			_filmRentalAPIDbContext.SaveChanges();
-			return Ok($"You have now deleted Film with ID: {filmID}");
+
+			catch (Exception ex)
+			{
+				return NotFound($"MAYDAY MAYDAY SOMETHING WENT SHITSHOW {ex}");
+			}
 
 		}
 
